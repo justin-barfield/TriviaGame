@@ -1,18 +1,27 @@
-body {
+* {
+    box-sizing: border-box;
+}
+
+html body {
     padding: 0px;
     margin: 0px;
     width: 100%;
+    background-color: teal
 }
 
-#div1 {
-    width: 100%;
+.text-warning {
+    font-weight: bold
+}
+
+#question-timer {
+
 }
 
 div {
     /* border: 1px solid black; */
+    margin: 10px;
 }
 
 #question-count {
-    padding: 0px;
-    margin: 0px;
+    
 }

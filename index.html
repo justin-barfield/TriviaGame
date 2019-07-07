@@ -17,18 +17,25 @@
     <title>Trivia Game</title>
 </head>
 <body>
-    <div id="maincontent" class="container-fluid justify-content-center">
+    <div id="maincontent" class="container justify-content-center bg-dark rounded">
         <!-- Title -->
-        <ul class="nav justify-content-center">
-            <li class="nav-item">
-                <a class="nav-link active" href="#">Trivia Game</a>
-            </li>
-        </ul>
+        <div class="row justify-content-center bg-info rounded-top">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#"><h1 class="text-warning">Trivia Game</h1></a>
+                </li>
+            </ul>
+        </div>
 
         <!-- Question Box -->
         <div id="div2" class="container">
             <!-- Question -->
-            <div id="asked-question" class="row justify-content-center">test</div>
+            <div id="asked-question" class="row justify-content-center bg-white rounded">
+                <div class="col-12">
+                    Question location
+                </div>
+                
+            </div>
 
             <!-- Answers -->
             <div id="question-answers" class="container">
@@ -43,11 +50,16 @@
 
         </div>
 
-        <!-- Question count -->
-        <div class="container">
-            <p id="question-count" class="row justify-content-center">
-                <span id="current-question">1</span>/<span id="total-questions">2</span>
-            </p>
+        <!-- Question count & Timer -->
+        <div class="container bg-secondary rounded">
+            <div class="row justify-content-between">
+                <div id="question-count" class="row col-3 justify-content-center">
+                    <span id="current-question">1</span>/<span id="total-questions">2</span>
+                </div>
+                <div id="question-timer" class="row col-3 justify-content-center">
+                    :10
+                </div>
+            </div>
         </div>
     </div>
 
@@ -92,52 +104,83 @@
             }
     };
 
-    var selectedAnswer = [];
+    var questionInterval = setInterval(timer, 10000);
 
-    var delayAlert;
+    function timer(){
 
-    // for(i = 0; i < quizQuestions.answer; i++) {
-    //     $('#question' + i).text(answer[i])
-    //     console.log(answer[i])
-    // }
-
-    // log(quizQuestions.answer[0].a);
-
-    function writeQuestion() {
-        $('#asked-question').text(quizQuestions[i].question)
     };
 
-    function writeanswer() {
-        for(i = 0; i < 4; i++){
-            $('question' + i).html(quizQuestions[0].answer[i].a)
-        }
-    };
+    var cancelQuestionInterval;
 
-    var questionTimeout = setTimeout(function() {
-        alert('Too slow! The answer was '/* + answer */)
-        // Write next question
-    }, 5000);
-    // Working
+    var cancelGlobalTimeout;
 
-    var cancelQuestionTimeout = $('li').click(function() {
-        clearTimeout(questionTimeout);
-    });
-    // Working
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // var selectedAnswer = [];
+
+    // var delayAlert;
+
+    
+
+    // function writeQuestion() {
+    //     $('#asked-question').text(quizQuestions[i].question)
+    // };
+
+    // function writeanswer() {
+    //     for(i = 0; i < 4; i++){
+    //         $('question' + i).html(quizQuestions[0].answer[i].a)
+    //     }
+    // };
+
+    // var questionTimeout = setTimeout(function() {
+    //     alert('Too slow! The answer was '/* + answer */)
+    //     // Write next question
+    // }, 5000);
+    // // Working
+
+    // var cancelQuestionTimeout = $('li').click(function() {
+    //     clearTimeout(questionTimeout);
+    // });
+    // // Working
    
     
-    $('li').click(function(){
-        $(this).addClass('active');
-       var selection = $(this).html();
-       selectedAnswer.push(selection);
-       // Verify if selected answer is correct
+    // $('li').click(function(){
+    //     $(this).addClass('active');
+    //    var selection = $(this).html();
+    //    selectedAnswer.push(selection);
+    //    // Verify if selected answer is correct
        
 
-       // Alert correct/incorrect and move to the next question
-       log(selectedAnswer);
-    });
+    //    // Alert correct/incorrect and move to the next question
+    //    log(selectedAnswer);
+    // });
 
-    questionTimeout
-    cancelQuestionTimeout
+    // questionTimeout
+    // cancelQuestionTimeout
 
     
     
