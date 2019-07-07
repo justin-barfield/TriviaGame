@@ -7,11 +7,12 @@
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script
+    <!-- <script
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-    crossorigin="anonymous"></script>
-    <script src="assets/javascript/app.js"></script>
+    crossorigin="anonymous"></script> -->
+    <script src="assets/javascript/jquery.min.js"></script>
+    <!-- <script src="assets/javascript/app.js"></script> -->
 
     <title>Trivia Game</title>
 </head>
@@ -27,16 +28,16 @@
         <!-- Question Box -->
         <div id="div2" class="container">
             <!-- Question -->
-            <div id="qsection1" class="row justify-content-center">test</div>
+            <div id="asked-question" class="row justify-content-center">test</div>
 
             <!-- Answers -->
-            <div id="qsection2" class="container">
+            <div id="question-answers" class="container">
                 <ul class="list-group">
                     <!-- Add class 'active' to whatever item was clicked -->
+                    <li id="question0" class="list-group-item">test</li>
                     <li id="question1" class="list-group-item">test</li>
                     <li id="question2" class="list-group-item">test</li>
                     <li id="question3" class="list-group-item">test</li>
-                    <li id="question4" class="list-group-item">test</li>
                 </ul>
             </div>
 
@@ -54,10 +55,90 @@
 
 
 
-<script>
+<script type="text/javascript">
     
+    var log = console.log;
+
+    var quizQuestions = {
+
+            question: {
+                q0: "Test",
+                q1: "Test2",
+                q2: "Test2",
+                q3: "Test2",
+                q4: "Test2",
+                q5: "Test2",
+                q6: "Test2",
+            },
+
+            answers: {
+                q0: ['Test1', 'Test 2', 'Test 3', 'Test 4'],
+                q1: ['Test1', 'Test 2', 'Test 3', 'Test 4'],
+                q2: ['Test1', 'Test 2', 'Test 3', 'Test 4'],
+                q3: ['Test1', 'Test 2', 'Test 3', 'Test 4'],
+                q4: ['Test1', 'Test 2', 'Test 3', 'Test 4'],
+                q5: ['Test1', 'Test 2', 'Test 3', 'Test 4'],
+                q6: ['Test1', 'Test 2', 'Test 3', 'Test 4']
+            },
+
+            correctAnswer: {
+                q0: 'Test1',
+                q1: 'Test 2',
+                q2: 'Test 3',
+                q3: 'Test1',
+                q4: 'Test 4',
+                q5: 'Test 2',
+                q6: 'Test1',
+            }
+    };
+
+    var selectedAnswer = [];
+
+    var delayAlert;
+
+    // for(i = 0; i < quizQuestions.answer; i++) {
+    //     $('#question' + i).text(answer[i])
+    //     console.log(answer[i])
+    // }
+
+    // log(quizQuestions.answer[0].a);
+
+    function writeQuestion() {
+        $('#asked-question').text(quizQuestions[i].question)
+    };
+
+    function writeanswer() {
+        for(i = 0; i < 4; i++){
+            $('question' + i).html(quizQuestions[0].answer[i].a)
+        }
+    };
+
+    var questionTimeout = setTimeout(function() {
+        alert('Too slow! The answer was '/* + answer */)
+        // Write next question
+    }, 5000);
+    // Working
+
+    var cancelQuestionTimeout = $('li').click(function() {
+        clearTimeout(questionTimeout);
+    });
+    // Working
+   
     
-    
+    $('li').click(function(){
+        $(this).addClass('active');
+       var selection = $(this).html();
+       selectedAnswer.push(selection);
+       // Verify if selected answer is correct
+       
+
+       // Alert correct/incorrect and move to the next question
+       log(selectedAnswer);
+    });
+
+    questionTimeout
+    cancelQuestionTimeout
+
     
     
 </script>
