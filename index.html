@@ -31,7 +31,7 @@
         <div id="div2" class="container">
             <!-- Question -->
             <div id="asked-question" class="row justify-content-center bg-white rounded">
-                <div class="col-12">
+                <div id="question" class="col-12">
                     Question location
                 </div>
                 
@@ -41,10 +41,10 @@
             <div id="question-answers" class="container">
                 <ul class="list-group">
                     <!-- Add class 'active' to whatever item was clicked -->
-                    <li id="question0" class="list-group-item">test</li>
-                    <li id="question1" class="list-group-item">test</li>
+                    <li id="question0" class="list-group-item"></li>
+                    <!-- <li id="question1" class="list-group-item">test</li>
                     <li id="question2" class="list-group-item">test</li>
-                    <li id="question3" class="list-group-item">test</li>
+                    <li id="question3" class="list-group-item">test</li> -->
                 </ul>
             </div>
 
@@ -74,7 +74,7 @@
     var quizQuestions = {
 
             question: {
-                q0: "Test",
+                q0: "What is the square root of pie?",
                 q1: "Test2",
                 q2: "Test2",
                 q3: "Test2",
@@ -114,6 +114,22 @@
 
     var cancelGlobalTimeout;
 
+    var questionNumber = 0;
+
+    var writeQuestion = Object.values(quizQuestions.question)[questionNumber];
+    $('#question').text(writeQuestion);
+
+    var callAnswers = Object.values(quizQuestions.answers)[questionNumber];
+
+    function writeAnswers() {
+        
+        for(i=0; i < callAnswers.length; i++){
+            $('#question0').append('<li id="question0" class="list-group-item">' +callAnswers[i]+ '</li>')
+        };
+    };
+    writeAnswers();
+
+    
 
 
 

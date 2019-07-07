@@ -9,6 +9,10 @@ html body {
     background-color: teal
 }
 
+#maincontent {
+    padding-bottom: 5px;
+}
+
 .text-warning {
     font-weight: bold
 }
