@@ -41,7 +41,7 @@
             <div id="question-answers" class="container">
                 <ul class="list-group">
                     <!-- Add class 'active' to whatever item was clicked -->
-                    <li id="question0" class="list-group-item"></li>
+                    <li id="question-container" class="list-group-item"></li>
                     <!-- <li id="question1" class="list-group-item">test</li>
                     <li id="question2" class="list-group-item">test</li>
                     <li id="question3" class="list-group-item">test</li> -->
@@ -74,26 +74,26 @@
     var quizQuestions = {
 
             question: {
-                q0: "What is the square root of pie?",
-                q1: "Test2",
-                q2: "Test2",
-                q3: "Test2",
-                q4: "Test2",
-                q5: "Test2",
-                q6: "Test2",
+                q0: "What is the approximate square root of pi?",
+                q1: "What is the capital of Missouri?",
+                q2: "Who starred as James Bond in 'The Living Daylights'?",
+                q3: "What is the mascot of South Dakota State University?",
+                q4: "Test5",
+                q5: "Test6",
+                q6: "Test7",
             },
 
-            answers: {
-                q0: ['Test1', 'Test 2', 'Test 3', 'Test 4'],
-                q1: ['Test1', 'Test 2', 'Test 3', 'Test 4'],
-                q2: ['Test1', 'Test 2', 'Test 3', 'Test 4'],
-                q3: ['Test1', 'Test 2', 'Test 3', 'Test 4'],
+            selections: {
+                q0: ['1.77', '2.20', '2.54', '1.45'],
+                q1: ['St. Louis', 'Columbia', 'Lincoln', 'Jefferson City'],
+                q2: ['Roger Moore', 'Timmothy Dalton', 'Pierce Brosnan', 'Sean Connery'],
+                q3: ['Jackrabbits', 'Bison', 'Coyotes', 'Tigers'],
                 q4: ['Test1', 'Test 2', 'Test 3', 'Test 4'],
                 q5: ['Test1', 'Test 2', 'Test 3', 'Test 4'],
                 q6: ['Test1', 'Test 2', 'Test 3', 'Test 4']
             },
 
-            correctAnswer: {
+            /* correctAnswer: {
                 q0: 'Test1',
                 q1: 'Test 2',
                 q2: 'Test 3',
@@ -101,7 +101,17 @@
                 q4: 'Test 4',
                 q5: 'Test 2',
                 q6: 'Test1',
-            }
+            } */
+
+            correctAnswer: [
+                '1.77',
+                'Jefferson City',
+                'Timmothy Dalton',
+                'Jackrabbits',
+                'Test 4',
+                'Test 2',
+                'Test1',
+        ]
     };
 
     var questionInterval = setInterval(timer, 10000);
@@ -110,26 +120,61 @@
 
     };
 
+    var correct = 0;
+    var wrong = 0;
+    var unanswered = 0;
+
     var cancelQuestionInterval;
 
     var cancelGlobalTimeout;
 
     var questionNumber = 0;
-
-    var writeQuestion = Object.values(quizQuestions.question)[questionNumber];
-    $('#question').text(writeQuestion);
-
-    var callAnswers = Object.values(quizQuestions.answers)[questionNumber];
-
-    function writeAnswers() {
-        
-        for(i=0; i < callAnswers.length; i++){
-            $('#question0').append('<li id="question0" class="list-group-item">' +callAnswers[i]+ '</li>')
+    
+    function writeQuestion(){
+        var callQuestion = Object.values(quizQuestions.question)[questionNumber];
+        $('#question').text(callQuestion);
+        log(callQuestion);
+    }
+    writeQuestion();
+    
+    function writeSelections() {
+        var callSelections = Object.values(quizQuestions.selections)[questionNumber];
+        for(i=0; i < callSelections.length; i++){
+            $('#question-container').append('<li class="list-group-item selection">' +callSelections[i]+ '</li>');   
         };
+        log(callSelections);
     };
-    writeAnswers();
+    writeSelections();
 
     
+    $('#question-container').on('click', '.selection', function(){
+        
+        var thisQuestionAnswer = Object.values(quizQuestions.correctAnswer)[questionNumber];
+        log(thisQuestionAnswer);
+
+        var selectedAnswer = $(this).text();
+
+        if(selectedAnswer === thisQuestionAnswer){
+            correct++;
+            questionNumber++;
+            $(this).addClass('bg-success');
+            log('correct: ', correct, questionNumber);
+
+            $('#question-container').empty()
+            writeQuestion();
+            writeSelections();
+
+        } else {
+            wrong++;
+            questionNumber++;
+            $(this).addClass('bg-danger');
+            log('wrong: ', wrong, questionNumber);
+            
+            $('#question-container').empty()
+            writeQuestion();
+            writeSelections();
+        }
+    })
 
 
 

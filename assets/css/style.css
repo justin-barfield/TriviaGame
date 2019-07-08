@@ -26,6 +26,10 @@ div {
     margin: 10px;
 }
 
+.list-group {
+    /* padding: 5px; */
+}
+
 #question-count {
     
 }
