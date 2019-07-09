@@ -96,17 +96,6 @@ var log = console.log;
             questionNumber++
             unanswered++;
             questionChangeTimeout();
-            
-            /* DRY */
-            // Attempt to rewrite the page to show the score.
-            if(totalQuestions === questionNumber){
-                var total = correct / (wrong + unanswered);
-                log(total);
-                $('#question-container').empty();
-                $('#question-container').append('<li id="game-reset-screen"     class="list-group-item">Correct answers: ' +correct+ '<br>Wrong answers: ' +wrong+ '<br>Unanswered: ' +unanswered+ '<br>Total: ' +total+ '</li>')
-                clearTimeout();
-            }
-            ;
         }
     };
 
@@ -180,15 +169,6 @@ var log = console.log;
                 stopInterval();
                 questionChangeTimeout();
 
-                /* DRY */
-                // Attempt to rewrite the page to show the score.
-                if(totalQuestions === questionNumber){
-                var total = correct / (wrong + unanswered);
-                log(total);
-                $('#question-container').empty();
-                $('#question-container').append('<li id="game-reset-screen"     class="list-group-item">Correct answers: ' +correct+ '<br>Wrong answers: ' +wrong+ '<br>Unanswered: ' +unanswered+ '<br>Total: ' +total+ '</li>')
-                clearTimeout();
-            }
             } else {
                 // Add to wrong and question number and adds red background if wrong.
                 clicked = true;
@@ -209,67 +189,31 @@ var log = console.log;
                 // Stop interval, goes to next question, and resets interval
                 stopInterval();
                 questionChangeTimeout();
-
-                /* DRY */
-                // Attempt to rewrite the page to show the score.
-                if(totalQuestions === questionNumber){
-                var total = correct / (wrong + unanswered);
-                log(total);
-                $('#question-container').empty();
-                $('#question-container').append('<li id="game-reset-screen"     class="list-group-item">Correct answers: ' +correct+ '<br>Wrong answers: ' +wrong+ '<br>Unanswered: ' +unanswered+ '<br>Total: ' +total+ '</li>')
-                clearTimeout();
-            }
-            }
-            
-            /* DRY */
-            // Attempt to rewrite the page to show the score.
-            if(totalQuestions === questionNumber){
-                var total = correct / (wrong + unanswered);
-                log(total);
-                $('#question-container').empty();
-                $('#question-container').append('<li id="game-reset-screen"     class="list-group-item">Correct answers: ' +correct+ '<br>Wrong answers: ' +wrong+ '<br>Unanswered: ' +unanswered+ '<br>Total: ' +total+ '</li>');
-                $('#question-container').add('button').addClass('reset-button')
-                clearTimeout();
             }
         } else {
             return
         }
-
-        /* DRY */
-        // Attempt to rewrite the page to show the score.
-        if(totalQuestions === questionNumber){
-            var total = correct / (wrong + unanswered);
-            log(total);
-            $('#question-container').empty();
-            $('#question-container').append('<li id="game-reset-screen"     class="list-group-item">Correct answers: ' +correct+ '<br>Wrong answers: ' +wrong+ '<br>Unanswered: ' +unanswered+ '<br>Total: ' +total+ '</li>');
-            $('#question-container').add('button').addClass('reset-button')
-            clearTimeout();
-        }
-        
     })
-
-    /* DRY */
-    // Attempt to rewrite the page to show the score.
-    if(totalQuestions === questionNumber){
-        var total = correct / (wrong + unanswered);
-        log(total);
-        $('#question-container').empty();
-        $('#question-container').append('<li id="game-reset-screen"     class="list-group-item">Correct answers: ' +correct+ '<br>Wrong answers: ' +wrong+ '<br>Unanswered: ' +unanswered+ '<br>Total: ' +total+ '</li>');
-        $('#question-container').add('button').addClass('reset-button')
-        clearTimeout();
-    }
-
 
     // Function to timeout going to the next question for 3 seconds
     function questionChangeTimeout() {
         setTimeout(function(){
-        $('#question-container').empty()
-        writeQuestion();
-        writeSelections();
-        intervalReset();
-        clicked = false;
-        writeQuestionNumber();
-        }, 3000)
+
+            // Show final score page when all questions have been shown
+            if(totalQuestions === questionNumber){
+                var total = 100 * ((wrong + unanswered) / correct);
+                $('#question-container').empty();
+                $('#question-container').append('<li id="game-reset-screen"     class="list-group-item">Correct answers: ' +correct+ '<br>Wrong answers: ' +wrong+ '<br>Unanswered: ' +unanswered+ '<br>Total: ' +total+ '</li>')
+                clearInterval();
+                return
+            }
+            $('#question-container').empty()
+            writeQuestion();
+            writeSelections();
+            intervalReset();
+            clicked = false;
+            writeQuestionNumber();
+        }, 2000)
     }
 
     // Writes the current question number to the page
