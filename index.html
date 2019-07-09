@@ -164,7 +164,6 @@
     function writeQuestion(){
         var callQuestion = Object.values(quizQuestions.question)[questionNumber];
         $('#question').text(callQuestion);
-        log(callQuestion);
     }
 
     // Writes the initial question to the page
@@ -177,10 +176,9 @@
     }
 
     function writeSelections() {
-        // var callSelections = Object.values(quizQuestions.selections)[questionNumber];
         getSelections();
         for(i=0; i < callSelections.length; i++){
-            $('#question-container').append('<li class="list-group-item selection">' +callSelections[i]+ '</li>');   
+            $('#question-container').append('<li class="list-group-item selection ' +i+ '">' +callSelections[i]+ '</li>');   
         };
     };
 
@@ -214,18 +212,17 @@
                 // Add to wrong and question number and adds red background if wrong.
                 clicked = true;
                 wrong++;
-                questionNumber++;
+                
                 $(this).addClass('bg-danger');
                 
                 // Add green background to the correct answer
                 getSelections();
                 for(i = 0; i < callSelections.length; i++){
-                    log(callSelections[i])
-                    
                     if(thisQuestionAnswer === callSelections[i]){
-                        $().addClass('bg-success');
+                        $('.' + i).addClass('bg-success');
                     }
                 }
+                questionNumber++;
 
                 // Stop interval, goes to next question, and resets interval
                 stopInterval();
