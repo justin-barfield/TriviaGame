@@ -138,10 +138,29 @@
 
             stopInterval();
             clicked = true;
+
+            // DRY code. Needs refinement
+            var thisQuestionAnswer = Object.values(quizQuestions.correctAnswer)[questionNumber];
+            getSelections();
+            for(i = 0; i < callSelections.length; i++){
+                if(thisQuestionAnswer === callSelections[i]){
+                    $('.' + i).addClass('bg-success');
+                }
+            }
+
             questionNumber++
             unanswered++;
             questionChangeTimeout();
             
+            /* DRY */
+            // Attempt to rewrite the page to show the score.
+            if(totalQuestions === questionNumber){
+                var total = correct / (wrong + unanswered);
+                log(total);
+                $('#question-container').empty();
+                $('#question-container').append('<li id="game-reset-screen"     class="list-group-item">Correct answers: ' +correct+ '<br>Wrong answers: ' +wrong+ '<br>Unanswered: ' +unanswered+ '<br>Total: ' +total+ '</li>')
+                clearTimeout();
+            }
             ;
         }
     };
@@ -182,11 +201,18 @@
         };
     };
 
+    /* Try to create this as a function to it can be called back to above and below. */
+
+    // function getQuestionAnswer() {
+    //     var thisQuestionAnswer = Object.values(quizQuestions.correctAnswer)[questionNumber];
+    //     return thisQuestionAnswer
+    // }
+
     // Writes the initial selections to the page
     writeSelections();
 
     // Records a click on the selections
-    $('#question-container').on('click', '.selection', function(thisQuestionAnswer){
+    $('#question-container').on('click', '.selection', showCorrectAnswer, function(thisQuestionAnswer){
         
         // Records the correct answer for the given question
         var thisQuestionAnswer = Object.values(quizQuestions.correctAnswer)[questionNumber];
@@ -208,6 +234,16 @@
                 // Stop interval, goes to next question, and resets interval
                 stopInterval();
                 questionChangeTimeout();
+
+                /* DRY */
+                // Attempt to rewrite the page to show the score.
+                if(totalQuestions === questionNumber){
+                var total = correct / (wrong + unanswered);
+                log(total);
+                $('#question-container').empty();
+                $('#question-container').append('<li id="game-reset-screen"     class="list-group-item">Correct answers: ' +correct+ '<br>Wrong answers: ' +wrong+ '<br>Unanswered: ' +unanswered+ '<br>Total: ' +total+ '</li>')
+                clearTimeout();
+            }
             } else {
                 // Add to wrong and question number and adds red background if wrong.
                 clicked = true;
@@ -215,7 +251,8 @@
                 
                 $(this).addClass('bg-danger');
                 
-                // Add green background to the correct answer
+                // showCorrectAnswer();
+
                 getSelections();
                 for(i = 0; i < callSelections.length; i++){
                     if(thisQuestionAnswer === callSelections[i]){
@@ -227,11 +264,55 @@
                 // Stop interval, goes to next question, and resets interval
                 stopInterval();
                 questionChangeTimeout();
+
+                /* DRY */
+                // Attempt to rewrite the page to show the score.
+                if(totalQuestions === questionNumber){
+                var total = correct / (wrong + unanswered);
+                log(total);
+                $('#question-container').empty();
+                $('#question-container').append('<li id="game-reset-screen"     class="list-group-item">Correct answers: ' +correct+ '<br>Wrong answers: ' +wrong+ '<br>Unanswered: ' +unanswered+ '<br>Total: ' +total+ '</li>')
+                clearTimeout();
+            }
+            }
+            
+            /* DRY */
+            // Attempt to rewrite the page to show the score.
+            if(totalQuestions === questionNumber){
+                var total = correct / (wrong + unanswered);
+                log(total);
+                $('#question-container').empty();
+                $('#question-container').append('<li id="game-reset-screen"     class="list-group-item">Correct answers: ' +correct+ '<br>Wrong answers: ' +wrong+ '<br>Unanswered: ' +unanswered+ '<br>Total: ' +total+ '</li>');
+                $('#question-container').add('button').addClass('reset-button')
+                clearTimeout();
             }
         } else {
             return
         }
+
+        /* DRY */
+        // Attempt to rewrite the page to show the score.
+        if(totalQuestions === questionNumber){
+            var total = correct / (wrong + unanswered);
+            log(total);
+            $('#question-container').empty();
+            $('#question-container').append('<li id="game-reset-screen"     class="list-group-item">Correct answers: ' +correct+ '<br>Wrong answers: ' +wrong+ '<br>Unanswered: ' +unanswered+ '<br>Total: ' +total+ '</li>');
+            $('#question-container').add('button').addClass('reset-button')
+            clearTimeout();
+        }
+        
     })
+
+    /* DRY */
+    // Attempt to rewrite the page to show the score.
+    if(totalQuestions === questionNumber){
+        var total = correct / (wrong + unanswered);
+        log(total);
+        $('#question-container').empty();
+        $('#question-container').append('<li id="game-reset-screen"     class="list-group-item">Correct answers: ' +correct+ '<br>Wrong answers: ' +wrong+ '<br>Unanswered: ' +unanswered+ '<br>Total: ' +total+ '</li>');
+        $('#question-container').add('button').addClass('reset-button')
+        clearTimeout();
+    }
 
 
     // Function to timeout going to the next question for 3 seconds
@@ -241,7 +322,7 @@
         writeQuestion();
         writeSelections();
         intervalReset();
-        clicked = false
+        clicked = false;
         writeQuestionNumber();
         }, 3000)
     }
@@ -254,6 +335,32 @@
     // Writes the initial question number to the page
     writeQuestionNumber();
 
+
+    // Add green background to the correct answer
+    /* NOT FUNCTIONAL */
+    function showCorrectAnswer() {    
+        getSelections();
+        getQuestionAnswer()
+        for(i = 0; i < callSelections.length; i++){
+            if(thisQuestionAnswer === callSelections[i]){
+                $('.' + i).addClass('bg-success');
+            }
+        }
+    }
+
+    $('.reset-button').click(function() {
+        correct = 0;
+        wrong = 0;
+        unanswered = 0;
+        questionNumber = 0;
+
+        $('#question-container').empty()
+        writeQuestion();
+        writeSelections();
+        intervalReset();
+        clicked = false;
+        writeQuestionNumber();
+    })
 
 
 
